@@ -69,15 +69,15 @@ def manual():
 def main(p_choices, s_choices):
     problems = [PROBLEMS[i-1] for i in map(int, p_choices)]
     searches = [SEARCHES[i-1] for i in map(int, s_choices)]
-
+    print("Problem,Search,Actions,Expansions,Goal_Tests,New_Nodes,Plan_Length,Time")
     for pname, problem_fn in problems:
         for sname, search_fn, heuristic in searches:
             hstring = heuristic if not heuristic else " with {}".format(heuristic)
-            print("\nSolving {} using {}{}...".format(pname, sname, hstring))
+            #print("\nSolving {} using {}{}...".format(pname, sname, hstring))
 
             problem_instance = problem_fn()
             heuristic_fn = None if not heuristic else getattr(problem_instance, heuristic)
-            run_search(problem_instance, search_fn, heuristic_fn)
+            run_search(problem_instance, search_fn, heuristic_fn, pname, sname, hstring)
 
 
 if __name__=="__main__":

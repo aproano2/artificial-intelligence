@@ -12,11 +12,12 @@ class PrintableProblem(InstrumentedProblem):
     modifies the print output of those statistics for air cargo problems.
     """
     def __repr__(self):
-        return '{:^10d}  {:^10d}  {:^10d}  {:^10d}'.format(
+#        return '{:^10d},  {:^10d},  {:^10d},  {:^10d}'.format(
+        return '{:d},{:d},{:d},{:d}'.format(
             len(self.problem.actions_list), self.succs, self.goal_tests, self.states)
 
 
-def run_search(problem, search_function, parameter=None):
+def run_search(problem, search_function, parameter=None, pname=None, sname=None, hstring=None):
     ip = PrintableProblem(problem)
     start = timer()
     if parameter is not None:
@@ -24,10 +25,10 @@ def run_search(problem, search_function, parameter=None):
     else:
         node = search_function(ip)
     end = timer()
-    print("\n# Actions   Expansions   Goal Tests   New Nodes")
-    print("{}\n".format(ip))
-    show_solution(node, end - start)
-    print()
+    #print("\n# Actions,   Expansions,   Goal_Tests,   New_Nodes, Plan_Length, Time")
+    print("{},{},{},{},{}".format(pname[-1], sname+hstring, ip, len(node.solution()), end-start))
+    #show_solution(node, end - start)
+    #print()
 
 
 def show_solution(node, elapsed_time):
