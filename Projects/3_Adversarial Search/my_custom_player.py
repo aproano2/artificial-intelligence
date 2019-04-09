@@ -2,7 +2,7 @@ import random
 from sample_players import DataPlayer
 from isolation.isolation import _WIDTH, _HEIGHT
 
-FLAG = 4
+FLAG = 0
 # Define coordinated of the center points of the board
 # CENTER_COORDS[0] contains the X-axis
 # CENTER_COORDS[1] contains the Y-axis
@@ -73,18 +73,7 @@ class CustomPlayer(DataPlayer):
         You can ignore the special case of calling this function
         from a terminal state.
         """
-        alpha = float("-inf")
-        beta = float("inf")
-        best_score = float("-inf")
-        best_move = None
-        for a in state.actions():
-            v = self.min_value(state.result(a), alpha, beta, depth)
-            alpha = max(alpha, v)
-            if v > best_score:
-                best_score = v
-                best_move = a
-        return best_move
-
+        return max(state.actions(), key=lambda x: self.min_value(state.result(x), float("-inf"), float("inf"), depth - 1))
 
     def min_value(self, state, alpha, beta, depth):
         """ Return the value for a win (+1) if the game is over,
